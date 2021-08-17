@@ -1,0 +1,15 @@
+**.env
+!test.env
+!ci.env
+coverage
+node_modules
+package-lock.json
+.idea/
+.vscode
+.scannerwork
+config.json
+# Serverless directories
+.serverless
+deploy-all.sh
+client.zip
+swagger
