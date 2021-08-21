@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "debug": "nodemon ./bin/www"
+    "debug": "nodemon ./bin/www",
+    "test": "npx jest --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -16,6 +17,7 @@
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "mysql2": "2.1.0",
     "qs": "^6.5.2",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0"

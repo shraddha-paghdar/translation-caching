@@ -42,6 +42,8 @@ Users also translate in
 			source: '',
 			target: '',
 		};
+
+		// On form submit hit the translate API
 		$('#queryForm').on('submit', function (e) {
 			e.preventDefault();
 			data.query = $('#sourceLanguageText').val();
@@ -49,18 +51,17 @@ Users also translate in
 			data.target = $('#targetLanguage').val();
 			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
 			$('#queryFormBtn').attr('disabled', 'true');
-			//fetchTranslationApi(data)
-			console.log(data)
+			fetchTranslationApi(data)
 		})
 
+		// On click of the related language hit translate API
 		$('#relatedLanguage').on('click', function () {
-			data.source = $(this).val();
+			data.target = $(this).val();
+			$('#targetLanguage').val($(this).val())
 			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
 			$('#queryFormBtn').attr('disabled', 'true');
-			//fetchTranslationApi(data)
-			console.log(data)
+			fetchTranslationApi(data)
 		})
-
 
 		function fetchTranslationApi(data) {
 			$.ajax({

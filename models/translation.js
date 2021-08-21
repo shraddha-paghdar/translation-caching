@@ -20,25 +20,28 @@ module.exports = (sequelize, DataTypes) => {
 			},
 		},
 		query: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT,
 			allowNull: false,
 		},
+		result: {
+			type: DataTypes.TEXT,
+		}
 	}, {
 		indexes: [],
 	})
 	// eslint-disable-next-line func-names
 	Transalation.associate = function (models) {
 		models.Transalation.belongsTo(models.Language, {
-      foreignKey: 'sourceLangCode',
-      sourceKey: 'code',
-      onDelete: 'RESTRICT',
-    })
+			foreignKey: 'sourceLangCode',
+			sourceKey: 'code',
+			onDelete: 'RESTRICT',
+		})
 
-    models.Transalation.belongsTo(models.Language, {
-      foreignKey: 'targetLangCode',
-      sourceKey: 'code',
-      onDelete: 'RESTRICT',
-    })
+		models.Transalation.belongsTo(models.Language, {
+			foreignKey: 'targetLangCode',
+			sourceKey: 'code',
+			onDelete: 'RESTRICT',
+		})
 	}
 	return Transalation
 }
