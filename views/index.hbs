@@ -4,36 +4,32 @@
 <form id="queryForm">
 	<div class="row">
 		<div class="col-md-6 mb-3">
-			<select class="form-select" id="sourceLanguage" aria-label="Default select example">
+			<select required class="form-select" id="sourceLanguage" aria-label="Default select example">
 				<option selected>Select Source language</option>
 				{{#each languages}}
 				<option value="{{code}}">{{languageName}}</option>
 				{{/each}}
 			</select>{{!-- select --}}
 			<div class="mt-3">
-				<textarea class="form-control" placeholder="Start Typing" rows="6" name="sourceLanguageText"
+				<textarea required class="form-control" placeholder="Start Typing" rows="6" name="sourceLanguageText"
 					id="sourceLanguageText" aria-describedby="emailHelp"></textarea>
 			</div>
 		</div>{{!-- col-6 --}}
 		<div class="col-md-6 mb-3">
-			<select class="form-select" id="targetLanguage" aria-label="Default select example">
+			<select required class="form-select" id="targetLanguage" aria-label="Default select example">
 				<option selected>Select Target language</option>
 				{{#each languages}}
 				<option value="{{code}}">{{languageName}}</option>
 				{{/each}}
 			</select>
 			<div class="mt-3">
-				<textarea class="form-control" placeholder="Translation" readonly rows="6" name="targetLanguageText"
-					id="targetLanguageText" aria-describedby="emailHelp"></textarea>
+				<textarea class="form-control" placeholder="Translation" readonly rows="6"
+					name="targetLanguageText" id="targetLanguageText" aria-describedby="emailHelp"></textarea>
 			</div>
 		</div>{{!-- col-6 --}}
 	</div>{{!-- row --}}
 	<button type="submit" id="queryFormBtn" class="btn btn-primary">Submit</button>
 </form>
-
-Users also translate in
-
-<button class="badge bg-dark" id="relatedLanguage" value="gu">Gujarati</button>
 
 <script>
 	$(document).ready(function () {
@@ -49,16 +45,6 @@ Users also translate in
 			data.query = $('#sourceLanguageText').val();
 			data.source = $('#sourceLanguage').val();
 			data.target = $('#targetLanguage').val();
-			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
-			$('#queryFormBtn').attr('disabled', 'true');
-			fetchTranslationApi(data)
-		})
-
-		// On click of the related language hit translate API
-		$('#relatedLanguage').on('click', function () {
-			data.target = $(this).val();
-			$('#targetLanguage').val($(this).val())
-			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
 			$('#queryFormBtn').attr('disabled', 'true');
 			fetchTranslationApi(data)
 		})
@@ -77,6 +63,7 @@ Users also translate in
 					$('#queryFormBtn').html('Submit');
 					$('#queryFormBtn').removeAttr('disabled');
 					$("#targetLanguageText").val(msg.message);
+					$('.related-lang').html('')
 				},
 				error: function (jqXHR, textStatus) {
 					let responseText = jQuery.parseJSON(jqXHR.responseText);

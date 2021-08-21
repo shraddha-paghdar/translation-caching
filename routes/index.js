@@ -126,7 +126,7 @@ router.post('/fetch_translation', async (req, res) => {
       /* Update the count of existing language */
       if (index !== -1) {
         language.relatedLanguage[index].count += 1
-        // language.relatedLanguage = [...language.relatedLanguage]
+        language.changed("relatedLanguage", true);
       } else {
         /* If target language is new add it to array */
         language.relatedLanguage = [...language.relatedLanguage, {
@@ -139,16 +139,15 @@ router.post('/fetch_translation', async (req, res) => {
     if (existingTranslation && existingTranslation.targetLangCode === req.body.target) {
       /* send already existing translation */
       res.send({
-        message: existingTranslation.result
+        message: existingTranslation.result,
       })
 
     } else {
       /* Hit the translation api and send the result */
-      const translatedResult = await models.fetchTranslation(req.body)
+      const translatedResult = await fetchTranslation(req.body)
 
       res.send({
         message: translatedResult.data.translations[0].translatedText,
-        otherLanguages: language.relatedLanguage
       })
       /* Create the result in Database after sending the response to save time */
       await createTranslation(req.body, translatedResult.data.translations[0].translatedText)
