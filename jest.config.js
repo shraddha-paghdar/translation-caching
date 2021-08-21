@@ -16,7 +16,6 @@ module.exports = {
     '/node_modules/',
     '/tests/',
     '/views/',
-    '/keys/',
     '/public/',
     '/models/',
   ],

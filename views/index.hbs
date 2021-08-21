@@ -1,2 +1,86 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
+
+<form id="queryForm">
+	<div class="row">
+		<div class="col-md-6 mb-3">
+			<select class="form-select" id="sourceLanguage" aria-label="Default select example">
+				<option selected>Select Source language</option>
+				{{#each languages}}
+				<option value="{{code}}">{{languageName}}</option>
+				{{/each}}
+			</select>{{!-- select --}}
+			<div class="mt-3">
+				<textarea class="form-control" placeholder="Start Typing" rows="6" name="sourceLanguageText"
+					id="sourceLanguageText" aria-describedby="emailHelp"></textarea>
+			</div>
+		</div>{{!-- col-6 --}}
+		<div class="col-md-6 mb-3">
+			<select class="form-select" id="targetLanguage" aria-label="Default select example">
+				<option selected>Select Target language</option>
+				{{#each languages}}
+				<option value="{{code}}">{{languageName}}</option>
+				{{/each}}
+			</select>
+			<div class="mt-3">
+				<textarea class="form-control" placeholder="Translation" readonly rows="6" name="targetLanguageText"
+					id="targetLanguageText" aria-describedby="emailHelp"></textarea>
+			</div>
+		</div>{{!-- col-6 --}}
+	</div>{{!-- row --}}
+	<button type="submit" id="queryFormBtn" class="btn btn-primary">Submit</button>
+</form>
+
+Users also translate in
+
+<button class="badge bg-dark" id="relatedLanguage" value="gu">Gujarati</button>
+
+<script>
+	$(document).ready(function () {
+		let data = {
+			query: '',
+			source: '',
+			target: '',
+		};
+		$('#queryForm').on('submit', function (e) {
+			e.preventDefault();
+			data.query = $('#sourceLanguageText').val();
+			data.source = $('#sourceLanguage').val();
+			data.target = $('#targetLanguage').val();
+			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
+			$('#queryFormBtn').attr('disabled', 'true');
+			//fetchTranslationApi(data)
+			console.log(data)
+		})
+
+		$('#relatedLanguage').on('click', function () {
+			data.source = $(this).val();
+			$('#queryFormBtn').html('<i class="fa fa-sync fa-spin text-primary"></i>');
+			$('#queryFormBtn').attr('disabled', 'true');
+			//fetchTranslationApi(data)
+			console.log(data)
+		})
+
+
+		function fetchTranslationApi(data) {
+			$.ajax({
+				url: '/fetch_translation',
+				type: 'POST',
+				data: {
+					query: data.query,
+					target: data.target,
+					source: data.source,
+				},
+				dataType: 'json',
+				success: function (msg) {
+					$('#queryFormBtn').html('Submit');
+					$('#queryFormBtn').removeAttr('disabled');
+					$("#targetLanguageText").val(msg.message);
+				},
+				error: function (jqXHR, textStatus) {
+					let responseText = jQuery.parseJSON(jqXHR.responseText);
+				}
+			});
+		}
+	})
+</script>
