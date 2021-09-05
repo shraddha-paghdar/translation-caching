@@ -27,7 +27,7 @@ const fetchTranslation = async (queryObject) => {
       'content-type': 'application/x-www-form-urlencoded',
       'accept-encoding': 'application/gzip',
       'x-rapidapi-host': 'google-translate1.p.rapidapi.com',
-      'x-rapidapi-key': 'bc1c50330bmshac9784253709ff2p1622cbjsnb0ddcc608c5a'
+      'x-rapidapi-key': 'API_KEY'
     },
     data: qs.stringify({
       q: queryObject.query,
